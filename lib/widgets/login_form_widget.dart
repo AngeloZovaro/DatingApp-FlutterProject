@@ -1,7 +1,12 @@
+import 'package:datingapp/screens/phone_number_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
+
+  Future<void> _phoneNumber(BuildContext context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PhoneNumberScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,7 @@ class LoginForm extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () => _phoneNumber(context),
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 50),
                           side: const BorderSide(color: Colors.white),
