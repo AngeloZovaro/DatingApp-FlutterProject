@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'verification_screen.dart';
 
-class PhoneNumberScreen extends StatelessWidget {
+class PhoneNumberScreen extends StatefulWidget {
   const PhoneNumberScreen({super.key});
+
+  @override
+  State<PhoneNumberScreen> createState() => _PhoneNumberScreenState();
+}
+
+class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
+  String fullPhoneNumber = '';
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +28,10 @@ class PhoneNumberScreen extends StatelessWidget {
         child: Center(
           child: Container(
             width: 350,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 24),
                 const Text(
                   'My mobile',
                   style: TextStyle(
@@ -48,9 +55,11 @@ class PhoneNumberScreen extends StatelessWidget {
                       borderSide: const BorderSide(),
                     ),
                   ),
-                  initialCountryCode: 'BR',
+                  initialCountryCode: 'US',
                   onChanged: (phone) {
-                    print(phone.completeNumber);
+                    setState(() {
+                      fullPhoneNumber = phone.completeNumber;
+                    });
                   },
                 ),
                 const SizedBox(height: 32),
@@ -58,7 +67,18 @@ class PhoneNumberScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (fullPhoneNumber.isNotEmpty) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VerificationScreen(
+                              phoneNumber: fullPhoneNumber,
+                            ),
+                          ),
+                        );
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFE94057),
                       shape: RoundedRectangleBorder(
