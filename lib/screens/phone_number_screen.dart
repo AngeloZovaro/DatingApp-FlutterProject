@@ -11,6 +11,7 @@ class PhoneNumberScreen extends StatefulWidget {
 
 class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   String fullPhoneNumber = '';
+  bool isValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +56,11 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       borderSide: const BorderSide(),
                     ),
                   ),
-                  initialCountryCode: 'US',
+                  initialCountryCode: 'BR',
                   onChanged: (phone) {
                     setState(() {
                       fullPhoneNumber = phone.completeNumber;
+                      isValid = phone.number.length >= 11;
                     });
                   },
                 ),
@@ -68,7 +70,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (fullPhoneNumber.isNotEmpty) {
+                      if (isValid) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -77,10 +79,16 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                             ),
                           ),
                         );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('The number is incomplete'), backgroundColor: Colors.red,
+                          ),
+                        );
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFE94057),
+                      backgroundColor: const Color(0xFFE94057),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
