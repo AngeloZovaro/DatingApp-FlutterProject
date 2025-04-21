@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:datingapp/screens/profile_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -20,8 +21,29 @@ class _VerificationScreenState extends State<VerificationScreen> {
         }
       } else if (enteredDigits.length < 4) {
         enteredDigits.add(value);
+
+        if (enteredDigits.length == 4) {
+          _validateCode(); // Valida o código ao completar 4 dígitos
+        }
       }
     });
+  }
+
+  void _validateCode() {
+    final code = enteredDigits.join('');
+    if (code == '6789') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProfileScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid code'), backgroundColor: Colors.red),
+      );
+      setState(() {
+        enteredDigits.clear();
+      });
+    }
   }
 
   Widget _buildDigitBox(int index) {
@@ -30,8 +52,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
       height: 56,
       margin: const EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
-        color: enteredDigits.length > index ? Color(0xFFE94057) : Colors.white,
-        border: Border.all(color: Color(0xFFE94057)),
+        color: enteredDigits.length > index ? const Color(0xFFE94057) : Colors.white,
+        border: Border.all(color: const Color(0xFFE94057)),
         borderRadius: BorderRadius.circular(12),
       ),
       alignment: Alignment.center,
@@ -85,7 +107,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       itemBuilder: (context, index) {
         final key = keys[index];
         if (key == '') {
-          return const SizedBox.shrink(); // espaço vazio
+          return const SizedBox.shrink();
         } else if (key == 'del') {
           return _buildKeyboardButton(key, icon: Icons.backspace_outlined);
         } else {
@@ -100,7 +122,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView( // Solução para evitar corte
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Align(
