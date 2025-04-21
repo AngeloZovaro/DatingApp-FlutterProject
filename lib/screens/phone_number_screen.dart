@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'verification_screen.dart';
+import 'package:datingapp/screens/verification_screen.dart';
 
 class PhoneNumberScreen extends StatefulWidget {
   const PhoneNumberScreen({super.key});
@@ -12,6 +12,24 @@ class PhoneNumberScreen extends StatefulWidget {
 class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   String fullPhoneNumber = '';
   bool isValid = false;
+
+  Future<void> _verificationScreen(BuildContext context) async {
+    if (isValid) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerificationScreen(phoneNumber: fullPhoneNumber,
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('The number is incomplete'), backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,24 +87,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (isValid) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VerificationScreen(
-                              phoneNumber: fullPhoneNumber,
-                            ),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('The number is incomplete'), backgroundColor: Colors.red,
-                          ),
-                        );
-                      }
-                    },
+                    onPressed: () => _verificationScreen(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFE94057),
                       shape: RoundedRectangleBorder(
