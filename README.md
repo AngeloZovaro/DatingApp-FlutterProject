@@ -5,6 +5,8 @@
     <img src="https://raw.githubusercontent.com/devicons/devicon/ca28c779441053191ff11710fe24a9e6c23690d6/icons/flutter/flutter-original.svg" width=100>
 </p>
 
+## Participantes do Projeto
+
 ## Objetivo do Projeto
 
 ✔ Aplicar o layout definido em aula
