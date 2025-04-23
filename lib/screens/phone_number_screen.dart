@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:datingapp/screens/verification_screen.dart';
 
@@ -75,6 +76,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     ),
                   ),
                   initialCountryCode: 'BR',
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly], //Parâmetro para aceitar apenas INT no campo
                   onChanged: (phone) {
                     setState(() {
                       fullPhoneNumber = phone.completeNumber;
