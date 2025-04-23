@@ -25,7 +25,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('O número está incompleto'), backgroundColor: Colors.red,
+          content: Text('The number is incomplete'), backgroundColor: Colors.red,
         ),
       );
     }
@@ -52,7 +52,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Número',
+                  'My mobile',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'Por favor, insira seu número de telefone válido. Nós lhe enviaremos um código de 4 dígitos para verificar sua conta',
+                  'Please enter your valid phone number. We will\nsend you a 4-digit code to verify your account.',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black54,
@@ -95,7 +95,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       ),
                     ),
                     child: const Text(
-                      'Continuar',
+                      'Continue',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
