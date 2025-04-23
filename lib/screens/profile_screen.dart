@@ -1,3 +1,4 @@
+import 'package:datingapp/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -50,6 +51,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _selectedDate = picked;
       });
     }
+  }
+
+  Future<void> _mainScreen(BuildContext context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
   }
 
   @override
@@ -180,9 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     backgroundColor: Color(0xFFE94057),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  onPressed: () {
-                    // Tratar o envio dos dados aqui
-                  },
+                  onPressed: () => _mainScreen(context),
                   child: const Text("Confirmar",
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
