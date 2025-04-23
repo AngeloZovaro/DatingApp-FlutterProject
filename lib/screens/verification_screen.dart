@@ -23,7 +23,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         enteredDigits.add(value);
 
         if (enteredDigits.length == 4) {
-          _validateCode(); // Valida o código ao completar 4 dígitos
+          _validateCode();
         }
       }
     });
@@ -38,7 +38,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid code'), backgroundColor: Colors.red),
+        const SnackBar(content: Text('Código inválido'), backgroundColor: Colors.red),
       );
       setState(() {
         enteredDigits.clear();
@@ -142,7 +142,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
               const SizedBox(height: 8),
               const Text(
-                "Type the verification code we’ve sent you",
+                "Digite o código de verificação que enviamos para você",
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.black54,
@@ -159,10 +159,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
-                  // lógica de reenvio
+        
                 },
                 child: const Text(
-                  "Send again",
+                  "Enviar novamente",
                   style: TextStyle(
                     color: Color(0xFFE94057),
                     fontSize: 14,
