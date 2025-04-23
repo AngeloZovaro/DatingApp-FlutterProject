@@ -56,8 +56,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -171,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                 }).toList(),
               ),
-              const Spacer(),
+              const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -180,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                   onPressed: () {
-                    // Aqui você pode tratar o envio dos dados
+                    // Tratar o envio dos dados aqui
                   },
                   child: const Text("Confirmar",
                       style: TextStyle(color: Colors.white, fontSize: 16)),
