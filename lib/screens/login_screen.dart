@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       const Text(
-                        'Para continuar, cadastre-se.',
+                        'Sign up to continue',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          'Continuar com o e-mail',
+                          'Continue with email',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          'Usar número de telefone',
+                          'Use phone number',
                           style: TextStyle(
                             fontSize: 16,
                             color: Color(0xFFE94057),
@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                           Expanded(child: Divider()),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text('Ou inscreva-se com'),
+                            child: Text('or sign up with'),
                           ),
                           Expanded(child: Divider()),
                         ],
@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    'Termos de uso.',
+                    'Terms of use',
                     style: TextStyle(
                       color: Color(0xFFE94057),
                       decoration: TextDecoration.underline,
@@ -108,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 24),
                   Text(
-                    'Política de privacidade',
+                    'Privacy Policy',
                     style: TextStyle(
                       color: Color(0xFFE94057),
                       decoration: TextDecoration.underline,
