@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
+  // Função para chamar a próxima tela
   Future<void> _phoneNumber(BuildContext context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => PhoneNumberScreen()));
   }
@@ -37,6 +38,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24),
+
+                      // Botões de login com email e número
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
@@ -70,6 +73,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 30),
+
+                      // Redes Sociais
                       Row(
                         children: const [
                           Expanded(child: Divider()),
@@ -94,6 +99,8 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // Footer da página
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Row(
@@ -123,6 +130,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  //Widget dos botões de Rede Social
   static Widget _socialButton(String assetPath) {
     return Container(
       width: 50,

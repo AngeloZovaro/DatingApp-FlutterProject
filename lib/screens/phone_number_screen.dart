@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/intl_phone_field.dart'; // Dependência para validar o páis e prefixo do telefone
 import 'package:datingapp/screens/verification_screen.dart';
 
 class PhoneNumberScreen extends StatefulWidget {
@@ -14,6 +14,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   String fullPhoneNumber = '';
   bool isValid = false;
 
+  // Função para validar se o número esta completo e chamar a próxima tela
   Future<void> _verificationScreen(BuildContext context) async {
     if (isValid) {
       Navigator.push(
@@ -68,6 +69,8 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                   ),
                 ),
                 const SizedBox(height: 32),
+
+                // Input para a digitação do número de telefone
                 IntlPhoneField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -76,7 +79,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     ),
                   ),
                   initialCountryCode: 'BR',
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly], //Parâmetro para aceitar apenas INT no campo
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly], // Parâmetro para aceitar apenas INT no campo
                   onChanged: (phone) {
                     setState(() {
                       fullPhoneNumber = phone.completeNumber;
@@ -85,6 +88,8 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                   },
                 ),
                 const SizedBox(height: 32),
+
+                // Botão para continuar para próxima tela
                 SizedBox(
                   width: double.infinity,
                   height: 50,
