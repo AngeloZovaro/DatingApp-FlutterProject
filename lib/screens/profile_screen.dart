@@ -15,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   DateTime? _selectedDate;
 
+  // Lista dos interesses possiveis
   final List<String> _interests = [
     'Música',
     'Viagens',
@@ -29,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
   List<String> _selectedInterests = [];
 
+  // Lista de orientações sexuais
   final List<String> _orientations = [
     'Heterossexual',
     'Homossexual',
@@ -38,6 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
   String? _selectedOrientation;
 
+  // Função do seletor de data
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -53,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  // Função para chamar a próxima tela
   Future<void> _mainScreen(BuildContext context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
   }
@@ -74,6 +78,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
+
+              // Foto de perfil
               Stack(
                 alignment: Alignment.bottomRight,
                 children: [
@@ -89,6 +95,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const SizedBox(height: 24),
+
+              // Input para digitação do nome e sobrenome
               TextField(
                 controller: _firstNameController,
                 decoration: const InputDecoration(
@@ -105,6 +113,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               const SizedBox(height: 16),
+
+              // Campo para selecionar a data de nascimento
               GestureDetector(
                 onTap: () => _selectDate(context),
                 child: Container(
@@ -130,6 +140,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               const SizedBox(height: 16),
+              
+              // Campo para listar e escolher a orientação sexual
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Selecione sua orientação sexual:",
@@ -152,6 +164,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }).toList(),
               ),
               const SizedBox(height: 16),
+
+              // Campo para listar e escolher os interesses
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Selecione seus interesses:",
@@ -178,6 +192,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }).toList(),
               ),
               const SizedBox(height: 24),
+              
+              // Botão para continuar para a próxima tela
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

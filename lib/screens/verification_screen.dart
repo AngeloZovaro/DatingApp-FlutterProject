@@ -13,6 +13,7 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   List<String> enteredDigits = [];
 
+  // Função para validar input do teclado
   void _onKeyboardTap(String value) {
     setState(() {
       if (value == 'del') {
@@ -29,6 +30,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     });
   }
 
+  // Função para validar código de verificação e chamar a próxima tela
   void _validateCode() {
     final code = enteredDigits.join('');
     if (code == '6789') {
@@ -46,6 +48,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     }
   }
 
+  // Widget dos números digitados
   Widget _buildDigitBox(int index) {
     return Container(
       width: 56,
@@ -68,6 +71,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     );
   }
 
+  // Widget do layout do teclado numérico
   Widget _buildKeyboardButton(String value, {IconData? icon}) {
     return InkWell(
       onTap: () => _onKeyboardTap(value),
@@ -86,6 +90,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     );
   }
 
+  // Widget do grid do teclado numérico
   Widget _buildKeyboard() {
     final keys = [
       '1', '2', '3',
@@ -157,10 +162,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
               const SizedBox(height: 32),
               _buildKeyboard(),
               const SizedBox(height: 16),
+
+              // Botão para reenvio do código
               TextButton(
-                onPressed: () {
-                  // lógica de reenvio
-                },
+                onPressed: () {},
                 child: const Text(
                   "Enviar novamente",
                   style: TextStyle(
