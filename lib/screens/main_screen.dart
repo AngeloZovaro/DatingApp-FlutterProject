@@ -42,6 +42,9 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
+  String? _activeIcon;
+  bool _showIcon = false;
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +56,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     _controller.addListener(() {
       setState(() {
         _position = _animation.value;
+        _rotation = 0.002 * _position.dx;
       });
     });
 
@@ -73,10 +77,15 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     setState(() {
       _position = Offset.zero;
       _rotation = 0;
+      _showIcon = false;
       if (_currentIndex < users.length - 1) {
         _currentIndex++;
       } else {
         _currentIndex = 0;
+      }
+
+      if (_currentIndex + 1 < users.length) {
+        precacheImage(AssetImage(users[_currentIndex + 1]['image']!), context);
       }
     });
   }
@@ -107,20 +116,29 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   void _triggerSwipe({required String direction}) {
     final size = MediaQuery.of(context).size;
     Offset endOffset;
+    String? icon;
 
     switch (direction) {
       case 'left':
         endOffset = Offset(-size.width, 0);
+        icon = 'clear';
         break;
       case 'right':
         endOffset = Offset(size.width, 0);
+        icon = 'star';
         break;
       case 'up':
         endOffset = Offset(0, -size.height);
+        icon = 'favorite';
         break;
       default:
         endOffset = Offset.zero;
     }
+
+    setState(() {
+      _showIcon = true;
+      _activeIcon = icon;
+    });
 
     _animation = Tween<Offset>(
       begin: _position,
@@ -128,6 +146,36 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.forward(from: 0);
+  }
+
+  Widget _buildAnimatedIcon() {
+    IconData? icon;
+    Color color;
+
+    switch (_activeIcon) {
+      case 'clear':
+        icon = Icons.clear;
+        color = Colors.orange;
+        break;
+      case 'star':
+        icon = Icons.star;
+        color = Colors.purple;
+        break;
+      case 'favorite':
+        icon = Icons.favorite;
+        color = Colors.pink;
+        break;
+      default:
+        return const SizedBox();
+    }
+
+    return AnimatedOpacity(
+      opacity: _showIcon ? 1 : 0,
+      duration: const Duration(milliseconds: 200),
+      child: Center(
+        child: Icon(icon, size: 100, color: color.withOpacity(0.8)),
+      ),
+    );
   }
 
   Widget _buildCard(Map<String, String> user) {
@@ -148,7 +196,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           gradient: LinearGradient(
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
-            colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+            colors: [Colors.black.withAlpha(178), Colors.transparent],
           ),
         ),
         child: Padding(
@@ -193,49 +241,54 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       body: SafeArea(
         child: Column(
           children: [
-            // Top Bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.arrow_back_ios, size: 20),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back_ios),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
                   Column(
                     children: const [
-                      Text("Discover", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                      Text("Chicago, IL", style: TextStyle(color: Colors.grey)),
+                      Text("Explorar", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text("São Paulo, SP", style: TextStyle(color: Colors.grey)),
                     ],
                   ),
                   const Icon(Icons.tune, size: 20),
                 ],
               ),
             ),
-
-            // Card Stack
             Expanded(
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  for (int i = users.length - 1; i >= _currentIndex; i--)
-                    if (i == _currentIndex)
-                      GestureDetector(
-                        onPanUpdate: _onPanUpdate,
-                        onPanEnd: _onPanEnd,
-                        child: Transform.translate(
-                          offset: _position,
-                          child: Transform.rotate(
-                            angle: _rotation,
-                            child: _buildCard(users[i]),
-                          ),
+                  if (_controller.isDismissed && _currentIndex + 1 < users.length)
+                    _buildCard(users[_currentIndex + 1]),
+                  GestureDetector(
+                    onPanUpdate: _onPanUpdate,
+                    onPanEnd: _onPanEnd,
+                    child: Transform.translate(
+                      offset: _position,
+                      child: Transform.rotate(
+                        angle: _rotation,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            _buildCard(users[_currentIndex]),
+                            _buildAnimatedIcon(),
+                          ],
                         ),
-                      )
-                    else
-                      _buildCard(users[i]),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-
-            // Action Buttons
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24.0),
               child: Row(
@@ -247,8 +300,6 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
                 ],
               ),
             ),
-
-            // Bottom Nav
             Container(
               height: 56,
               decoration: BoxDecoration(
