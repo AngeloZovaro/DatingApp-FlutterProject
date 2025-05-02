@@ -1,13 +1,11 @@
-import 'package:datingapp/screens/phone_number_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'package:datingapp/helpers/navigation.dart';
+import 'package:datingapp/screens/login/widgets/social_button.dart';
+import 'package:datingapp/screens/phone_number/phone_number_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
-  // Função para chamar a próxima tela
-  Future<void> _phoneNumber(BuildContext context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PhoneNumberScreen()));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +30,9 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       const Text(
                         'Para continuar, cadastre-se',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(height: 24),
-
-                      // Botões de login com email e número
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
@@ -56,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       OutlinedButton(
-                        onPressed: () => _phoneNumber(context),
+                        onPressed: () => navigateTo(context, const PhoneNumberScreen()),
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 50),
                           side: const BorderSide(color: Colors.white),
@@ -73,10 +66,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 30),
-
-                      // Redes Sociais
-                      Row(
-                        children: const [
+                      const Row(
+                        children: [
                           Expanded(child: Divider()),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
@@ -86,12 +77,12 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          _socialButton('lib/assets/icons/facebook.png'),
-                          _socialButton('lib/assets/icons/google.png'),
-                          _socialButton('lib/assets/icons/apple.png'),
+                          SocialButton(assetPath: 'lib/assets/icons/facebook.png'),
+                          SocialButton(assetPath: 'lib/assets/icons/google.png'),
+                          SocialButton(assetPath: 'lib/assets/icons/apple.png'),
                         ],
                       ),
                     ],
@@ -99,8 +90,6 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Footer da página
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Row(
@@ -127,20 +116,6 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  //Widget dos botões de Rede Social
-  static Widget _socialButton(String assetPath) {
-    return Container(
-      width: 50,
-      height: 50,
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Image.asset(assetPath),
     );
   }
 }

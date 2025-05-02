@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class MatchScreen extends StatefulWidget {
+  const MatchScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MatchScreen> createState() => _MatchScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
+class _MatchScreenState extends State<MatchScreen> with SingleTickerProviderStateMixin {
   final List<Map<String, String>> users = [
     {
       'name': 'Peter Parker',
@@ -68,6 +68,18 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _precacheNextImage();
+  }
+
+  void _precacheNextImage() {
+    if (_currentIndex + 1 < users.length) {
+      precacheImage(AssetImage(users[_currentIndex + 1]['image']!), context);
+    }
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -83,11 +95,8 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       } else {
         _currentIndex = 0;
       }
-
-      if (_currentIndex + 1 < users.length) {
-        precacheImage(AssetImage(users[_currentIndex + 1]['image']!), context);
-      }
     });
+    _precacheNextImage();
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
