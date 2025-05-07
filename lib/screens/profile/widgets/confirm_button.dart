@@ -16,7 +16,7 @@ class ConfirmButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: const Text(
-          "Confirmar",
+          "Salvar",
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
       ),

@@ -1,3 +1,5 @@
+import 'package:datingapp/screens/chat_list/chat_list_screen.dart';
+import 'package:datingapp/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class MatchScreen extends StatefulWidget {
@@ -268,7 +270,15 @@ class _MatchScreenState extends State<MatchScreen> with SingleTickerProviderStat
                       Text("São Paulo, SP", style: TextStyle(color: Colors.grey)),
                     ],
                   ),
-                  const Icon(Icons.tune, size: 20),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                      );
+                    },
+                    child: const Icon(Icons.tune, size: 20),
+                  ),
                 ],
               ),
             ),
@@ -316,14 +326,25 @@ class _MatchScreenState extends State<MatchScreen> with SingleTickerProviderStat
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  Icon(Icons.local_fire_department, color: Colors.redAccent),
-                  Icon(Icons.favorite, color: Colors.pink),
-                  Icon(Icons.chat_bubble_outline, color: Colors.grey),
-                  Icon(Icons.person_outline, color: Colors.grey),
+                children: [
+                  const Icon(Icons.local_fire_department, color: Colors.redAccent),
+                  const Icon(Icons.favorite, color: Colors.pink),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ChatListScreen()),
+                      );
+                    },
+                    child: const Icon(Icons.chat_bubble_outline, color: Colors.grey),
+                  ),
+                  GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                    child: const Icon(Icons.person_outline, color: Colors.black),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
