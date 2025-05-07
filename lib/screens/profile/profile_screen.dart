@@ -17,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController(text: "Cauã");
   final lastNameController = TextEditingController(text: "Moreto");
 
@@ -24,50 +25,89 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? selectedOrientation;
   List<String> selectedInterests = [];
 
+  void _submitForm() {
+    if (_formKey.currentState?.validate() ?? false) {
+      navigateTo(context, const MatchScreen());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth > 600;
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(24.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back_ios),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                    const Text("Seu perfil", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    const ProfilePhoto(),
+                    const SizedBox(height: 24),
+
+                    isWide
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: NameInputFields(
+                                  firstNameController: firstNameController,
+                                  lastNameController: lastNameController,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: BirthDatePicker(
+                                  selectedDate: selectedDate,
+                                  onDateSelected: (date) => setState(() => selectedDate = date),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              NameInputFields(
+                                firstNameController: firstNameController,
+                                lastNameController: lastNameController,
+                              ),
+                              const SizedBox(height: 16),
+                              BirthDatePicker(
+                                selectedDate: selectedDate,
+                                onDateSelected: (date) => setState(() => selectedDate = date),
+                              ),
+                            ],
+                          ),
+                    const SizedBox(height: 16),
+                    OrientationSelector(
+                      selectedOrientation: selectedOrientation,
+                      onChanged: (value) => setState(() => selectedOrientation = value),
+                    ),
+                    const SizedBox(height: 16),
+                    InterestsSelector(
+                      selectedInterests: selectedInterests,
+                      onChanged: (interests) => setState(() => selectedInterests = interests),
+                    ),
+                    const SizedBox(height: 24),
+                    ConfirmButton(onPressed: _submitForm),
+                  ],
                 ),
               ),
-              const Text("Seu perfil", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              const ProfilePhoto(),
-              const SizedBox(height: 24),
-              NameInputFields(
-                firstNameController: firstNameController,
-                lastNameController: lastNameController,
-              ),
-              const SizedBox(height: 16),
-              BirthDatePicker(
-                selectedDate: selectedDate,
-                onDateSelected: (date) => setState(() => selectedDate = date),
-              ),
-              const SizedBox(height: 16),
-              OrientationSelector(
-                selectedOrientation: selectedOrientation,
-                onChanged: (value) => setState(() => selectedOrientation = value),
-              ),
-              const SizedBox(height: 16),
-              InterestsSelector(
-                selectedInterests: selectedInterests,
-                onChanged: (interests) => setState(() => selectedInterests = interests),
-              ),
-              const SizedBox(height: 24),
-              ConfirmButton(onPressed: () => navigateTo(context, const MatchScreen())),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

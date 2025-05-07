@@ -6,3 +6,4 @@ void navigateTo(BuildContext context, Widget screen) {
     MaterialPageRoute(builder: (_) => screen),
   );
 }
+
