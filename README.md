@@ -36,3 +36,7 @@ Renan de Oliveira Breier - BP3040143
 • ProfileScreen - Tela de perfil para personalização e criação do usuário
 
 • MatchScreen - Tela principal onde é possivel dar like e dislike em outros usuários
+
+• ChatListScreen - Tela onde o usuário pode acessar os chats de conversas
+
+• SettingScreen - Tela de configuração da conta do usuário
